@@ -1,34 +1,9 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 import CartItem from "./CartItem";
 
 const Cart = ({ onClose }) => {
-  const [cartItems, setCartItems] = useState([
-    {
-      title: "Colors",
-      price: 100,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-      quantity: 2,
-    },
-    {
-      title: "Black and white Colors",
-      price: 50,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-      quantity: 3,
-    },
-    {
-      title: "Yellow and Black Colors",
-      price: 70,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-      quantity: 1,
-    },
-  ]);
-
-  const removeItemHandler = (title) => {
-    setCartItems(cartItems.filter((item) => item.title !== title));
-  };
+  const { cartItems } = useContext(CartContext);
 
   const totalAmount = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -36,31 +11,17 @@ const Cart = ({ onClose }) => {
   );
 
   return (
-    <div className="fixed top-0 right-0 h-full w-[450px] bg-white shadow-lg z-50 p-6">
-      <div className="flex justify-between items-center mb-6">
+    <div className="fixed top-0 right-0 w-[450px] h-full bg-white p-6 shadow-lg">
+      <div className="flex justify-between mb-6">
         <h2 className="text-2xl font-bold">CART</h2>
-        <button onClick={onClose} className="text-xl">
-          ✖
-        </button>
-      </div>
-
-      <div className="flex font-bold border-b pb-2 mb-4">
-        <span className="w-1/2">ITEM</span>
-        <span className="w-1/4">PRICE</span>
-        <span className="w-1/4">QUANTITY</span>
+        <button onClick={onClose}>✖</button>
       </div>
 
       {cartItems.map((item) => (
-        <CartItem key={item.title} item={item} onRemove={removeItemHandler} />
+        <CartItem key={item.title} item={item} />
       ))}
 
-      <div className="flex justify-end mt-6 text-xl font-bold">
-        Total&nbsp; ${totalAmount}
-      </div>
-
-      <button className="block mx-auto mt-8 bg-cyan-400 text-white px-8 py-3 rounded text-lg">
-        PURCHASE
-      </button>
+      <div className="text-right font-bold mt-6">Total ${totalAmount}</div>
     </div>
   );
 };

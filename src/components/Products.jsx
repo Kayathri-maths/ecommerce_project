@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
+
 const productsArr = [
   {
     title: "Colors",
@@ -14,32 +17,28 @@ const productsArr = [
     price: 70,
     imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
   },
-  {
-    title: "Blue Color",
-    price: 100,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
-  },
 ];
 
 const Products = () => {
+  const { addItem } = useContext(CartContext);
+
   return (
-    <div className="max-w-7xl mx-auto px-6 py-16">
-      <h2 className="text-3xl font-bold text-center mb-12">MUSIC</h2>
+    <div className="max-w-6xl mx-auto py-16">
+      <h2 className="text-3xl font-bold text-center mb-10">MUSIC</h2>
 
-      <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-        {productsArr.map((product, index) => (
-          <div key={index} className="text-center">
-            <h3 className="font-semibold mb-3">{product.title}</h3>
+      <div className="grid grid-cols-3 gap-10">
+        {productsArr.map((product) => (
+          <div key={product.title} className="text-center">
+            <h3 className="mb-3 font-semibold">{product.title}</h3>
 
-            <img
-              src={product.imageUrl}
-              alt={product.title}
-              className="mx-auto mb-4"
-            />
+            <img src={product.imageUrl} className="mx-auto mb-4" />
 
-            <div className="flex items-center justify-between px-4">
-              <span className="font-bold">${product.price}</span>
-              <button className="bg-blue-500 text-white px-3 py-1 text-sm rounded">
+            <div className="flex justify-between px-4">
+              <span>${product.price}</span>
+              <button
+                onClick={() => addItem(product)}
+                className="bg-blue-500 text-white px-3 py-1 rounded"
+              >
                 ADD TO CART
               </button>
             </div>
