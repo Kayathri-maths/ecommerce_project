@@ -1,29 +1,30 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 
 const Navbar = ({ onOpenCart }) => {
   const { totalQuantity } = useContext(CartContext);
 
+  const linkClass = ({ isActive }) =>
+    isActive ? "text-cyan-400" : "text-white";
+
   return (
     <nav className="bg-black text-white px-8 py-4 flex justify-between items-center">
       <ul className="flex gap-10 text-sm font-semibold">
         <li>
-          <Link to="/" className="hover:text-gray-300">
+          <NavLink to="/" className={linkClass}>
             HOME
-          </Link>
+          </NavLink>
         </li>
-
         <li>
-          <Link to="/store" className="hover:text-gray-300">
+          <NavLink to="/store" className={linkClass}>
             STORE
-          </Link>
+          </NavLink>
         </li>
-
         <li>
-          <Link to="/about" className="hover:text-gray-300">
+          <NavLink to="/about" className={linkClass}>
             ABOUT
-          </Link>
+          </NavLink>
         </li>
       </ul>
 
